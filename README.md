@@ -20,6 +20,9 @@ For example:
 
 HISTORY
 -------
+* v0.1.1 - 2013-11-06:
+	> - EclipsePDT: generate a dummy PHPUnit test case that can be used as a template.
+
 * v0.1.0 - 2013-11-05: first version
 
 

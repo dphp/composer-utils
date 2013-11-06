@@ -40,6 +40,8 @@ class EclipsePdt {
     
     /* generate .project file */
     private static function _generateFileProject($projName) {
+        echo "Generating file [.project]...\n";
+        
         $filename = ".project";
         if (! file_exists ( $filename )) {
             $xml = <<<XML
@@ -83,6 +85,8 @@ XML;
     
     /* generate .buildpath file */
     private static function _generateFileBuildpath() {
+        echo "Generating file [.buildpath]...\n";
+        
         $filename = ".buildpath";
         if (! file_exists ( $filename )) {
             $xml = <<<XML
@@ -98,6 +102,8 @@ XML;
     
     /* generate .gitignore file */
     private static function _generateFileGitIgnore() {
+        echo "Generating file [.gitignore]...\n";
+        
         $filename = ".gitignore";
         $lines = file_exists ( $filename ) ? file ( $filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES ) : Array ();
         
@@ -124,9 +130,31 @@ XML;
     
     /* generate project directory structure */
     private static function _generateProjectStructure($vendorName) {
+        echo "Generating Eclipse PDT project structure...\n";
+        
         $vendorName = ucwords ( $vendorName );
         @mkdir ( "src/main/php/$vendorName", 0755, TRUE );
         @mkdir ( "src/test/php/$vendorName", 0755, TRUE );
+        
+        $php = <<<PHP
+<?php
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
+namespace {$vendorName};
+
+/**
+ * A dummy PHPUnit test case that can be used as a template.
+ *
+ * @package {$vendorName}
+ * @author {$vendorName}
+ * @copyright (C) {$vendorName}
+ */
+class DummyTest extends \PHPUnit_Framework_TestCase {
+    public function testDummy() {
+        \$this->assertTrue(TRUE);        
+    }
+}
+PHP;
+        file_put_contents("src/test/php/$vendorName/DummyTest.php", $php, 0);
         
         @mkdir ( ".settings", 0755, TRUE );
         
@@ -172,5 +200,7 @@ XML;
         self::_generateFileProject ( $PROJ_NAME );
         self::_generateFileBuildpath ();
         self::_generateFileGitIgnore ();
+        
+        echo "DONE.\n";
     }
 }
