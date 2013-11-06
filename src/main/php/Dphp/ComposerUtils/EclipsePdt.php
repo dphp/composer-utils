@@ -141,6 +141,8 @@ XML;
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 namespace {$vendorName};
 
+require_once 'vendor/autoload.php';
+
 /**
  * A dummy PHPUnit test case that can be used as a template.
  *
